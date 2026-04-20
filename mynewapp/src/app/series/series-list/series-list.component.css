@@ -1,0 +1,34 @@
+.series-wrapper {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.series-header {
+  background-color: #17a2b8;
+  color: white;
+  font-weight: 600;
+  padding: 0.65rem 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.series-row {
+  cursor: pointer;
+}
+
+.series-name {
+  color: #0d6efd;
+}
+
+.average-text {
+  margin-top: 0.75rem;
+  font-weight: 500;
+}
+
+.series-detail-card {
+  min-height: 100%;
+}
+
+.series-detail-card img {
+  height: 320px;
+  object-fit: cover;
+}

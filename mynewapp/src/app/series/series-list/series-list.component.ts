@@ -10,6 +10,8 @@ import { dataSeries } from '../data-series';
 })
 export class SeriesListComponent implements OnInit {
   series: Array<Series> = [];
+  selectedSeries!: Series;
+  averageSeasons: number = 0;
 
   constructor() {}
 
@@ -17,8 +19,27 @@ export class SeriesListComponent implements OnInit {
     return dataSeries;
   }
 
-  ngOnInit() {
+  calculateAverageSeasons(): number {
+    if (this.series.length === 0) {
+      return 0;
+    }
+
+    const totalSeasons = this.series.reduce(
+      (sum, currentSeries) => sum + currentSeries.seasons, 0);
+
+    return totalSeasons / this.series.length;
+  }
+
+  selectSeries(series: Series): void {
+    this.selectedSeries = series;
+  }
+
+  ngOnInit(): void {
     this.series = this.getSeriesList();
+    this.averageSeasons = this.calculateAverageSeasons();
+
+    if (this.series.length > 0) {
+      this.selectedSeries = this.series[0];
+    }
   }
 }
-

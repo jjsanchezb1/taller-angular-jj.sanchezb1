@@ -1,32 +1,60 @@
-<div class="container-fluid">
-  <div class="col-6">
-    <table class="table">
-      <thead>
-        <tr>
-          <th class="h4">#</th>
-          <th class="h4">Name</th>
-          <th class="h4">Channel</th>
-          <th class="h4">Seasons</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (s of series; track s) {
-        <tr>
-          <td>
-            <dd>{{ s.id }}</dd>
-          </td>
-          <td>
-            <dd>{{ s.name }}</dd>
-          </td>
-          <td>
-            <dd>{{ s.channel }}</dd>
-          </td>
-          <td>
-            <dd>{{ s.seasons }}</dd>
-          </td>
-        </tr>
-        }
-      </tbody>
-    </table>
+<div class="series-wrapper">
+  <div class="series-header">TV Series</div>
+
+  <div class="row g-4 align-items-start">
+    <div class="col-lg-7">
+      <table class="table table-bordered table-hover mb-2">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Channel</th>
+            <th>Seasons</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (s of series; track s.id) {
+          <tr
+            (click)="selectSeries(s)"
+            [class.table-active]="selectedSeries && selectedSeries.id === s.id"
+            class="series-row"
+          >
+            <td>{{ s.id }}</td>
+            <td class="series-name">{{ s.name }}</td>
+            <td>{{ s.channel }}</td>
+            <td>{{ s.seasons }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+
+      <p class="average-text">
+        Seasons average: {{ averageSeasons.toFixed(2) }}
+      </p>
+    </div>
+
+    <div class="col-lg-5">
+      @if (selectedSeries) {
+      <div class="card series-detail-card">
+        <img
+          [src]="selectedSeries.image"
+          class="card-img-top"
+          [alt]="selectedSeries.name"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ selectedSeries.name }}</h5>
+          <p class="card-text">{{ selectedSeries.description }}</p>
+          <a
+            [href]="selectedSeries.webLink"
+            class="card-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Go to web site
+          </a>
+        </div>
+      </div>
+      }
+    </div>
   </div>
 </div>
