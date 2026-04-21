@@ -8,12 +8,12 @@ import { environment } from '../../environments/environment.development';
 @Injectable({
   providedIn: 'root'
 })
-export class CourseService {
+export class SeriesService {
   private apiUrl = environment.baseUrl + 'courses.json';
 
   constructor(private http: HttpClient) { }
 
-  getCourses(): Observable<Series[]> {
+  getSeries(): Observable<Series[]> {
     return this.http.get<Series[]>(this.apiUrl);
   }
 }
