@@ -23,7 +23,6 @@ export class SeriesListComponent implements OnInit {
     this.seriesService.getSeries().subscribe((data) => {
       this.series = data;
       console.log(this.series);
-      this.cdr.detectChanges();
       if (this.series.length > 0) {
         this.selectedSeries = this.series[0];
       }
