@@ -8,6 +8,4 @@ import { Series } from './series';
   imports: [CommonModule],
   exports: [SeriesListComponent]
 })
-export class SeriesModule {
-  courses: Array<Series> = [];
-}
+export class SeriesModule {}

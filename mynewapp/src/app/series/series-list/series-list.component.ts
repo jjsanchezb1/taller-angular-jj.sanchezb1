@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Series } from '../series';
-import { dataSeries } from '../data-series';
+//import { dataSeries } from '../data-series';
+import { SeriesService } from '../series.service';
 
 @Component({
   selector: 'app-series-list',
@@ -13,21 +14,36 @@ export class SeriesListComponent implements OnInit {
   selectedSeries!: Series;
   averageSeasons: number = 0;
 
-  constructor() {}
+  constructor(
+    private seriesService: SeriesService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  getSeriesList(): Array<Series> {
-    return dataSeries;
+  getSeriesList(): void {
+    this.seriesService.getSeries().subscribe((data) => {
+      this.series = data;
+      console.log(this.series);
+      this.cdr.detectChanges();
+      if (this.series.length > 0) {
+        this.selectedSeries = this.series[0];
+      }
+      this.calculateAverageSeasons();
+      this.cdr.detectChanges();
+
+    });
   }
 
-  calculateAverageSeasons(): number {
-    if (this.series.length === 0) {
-      return 0;
+  calculateAverageSeasons(): void {
+    let totalSeasons = 0;
+    this.series.forEach((serie) => {
+      totalSeasons += serie.seasons;
+    });
+
+    if (this.series.length > 0) {
+      this.averageSeasons = totalSeasons / this.series.length;
+    } else {
+      this.averageSeasons = 0;
     }
-
-    const totalSeasons = this.series.reduce(
-      (sum, currentSeries) => sum + currentSeries.seasons, 0);
-
-    return totalSeasons / this.series.length;
   }
 
   selectSeries(series: Series): void {
@@ -35,11 +51,6 @@ export class SeriesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.series = this.getSeriesList();
-    this.averageSeasons = this.calculateAverageSeasons();
-
-    if (this.series.length > 0) {
-      this.selectedSeries = this.series[0];
-    }
+    this.getSeriesList();
   }
 }

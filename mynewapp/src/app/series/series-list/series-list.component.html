@@ -37,7 +37,7 @@
       @if (selectedSeries) {
       <div class="card series-detail-card">
         <img
-          [src]="selectedSeries.image"
+          [src]="selectedSeries.poster"
           class="card-img-top"
           [alt]="selectedSeries.name"
         />
@@ -45,7 +45,7 @@
           <h5 class="card-title">{{ selectedSeries.name }}</h5>
           <p class="card-text">{{ selectedSeries.description }}</p>
           <a
-            [href]="selectedSeries.webLink"
+            [href]="selectedSeries.webpage"
             class="card-link"
             target="_blank"
             rel="noopener noreferrer"
